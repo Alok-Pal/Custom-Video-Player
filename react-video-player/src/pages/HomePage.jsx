@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
-import Cards from "../components/Cards";
 import { mediaJSON } from "../utils/data";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchVideo } from "../redux/action/fetchVideoAction";
-import { selectMediaData, setMediaData } from "../redux/slice/mediaSlice";
+import { setMediaData } from "../redux/slice/mediaSlice";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import {
   DndContext,
@@ -18,6 +15,7 @@ import {
 import Column from "../components/Column";
 
 const HomePage = () => {
+  const [tasks, setTasks] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,8 +24,6 @@ const HomePage = () => {
 
   const mediaData = useSelector((state) => state.media.categories[0]?.videos);
   console.log("🚀 ~ HomePage ~ mediaData:", mediaData);
-
-  const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
     if (mediaData !== undefined) {
@@ -59,10 +55,7 @@ const HomePage = () => {
   );
 
   return (
-    <div>
-      <Navbar />
-      {/* {mediaData ? <Cards media={mediaData} /> : ""} */}
-
+    <div className="mt-5">
       <DndContext
         sensors={sensors}
         onDragEnd={handleDragEnd}

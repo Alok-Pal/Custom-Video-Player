@@ -1,0 +1,25 @@
+@media only screen and (max-width: 1514px) {
+    .divImgSize {
+        max-width: 49.5rem !important;
+    }
+
+    .imgSize {
+        width: 29.6rem !important;
+        height: 15rem !important;
+    }
+}
+
+@media only screen and (max-width: 1140px) {
+    .imgSize {
+        width: 33.9rem !important;
+        height: 15rem !important;
+    }
+}
+
+@media only screen and (max-width: 1140px) {
+    .imgSize {
+        width: 45.9rem !important;
+        height: 25rem !important;
+        object-fit: fill !important;
+    }
+}

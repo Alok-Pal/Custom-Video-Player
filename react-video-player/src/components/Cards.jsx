@@ -1,9 +1,8 @@
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-
+import "./Cards.css";
 const Cards = ({ id, title, thumb }) => {
- 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
   const style = {
@@ -13,30 +12,18 @@ const Cards = ({ id, title, thumb }) => {
 
   return (
     <>
-      {/* <div className="flex flex-wrap">
-        {media.map((url, index) => (
-          <div
-            key={index}
-            className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2"
-          >
-            <a href="#">
-              <img className="rounded-t-lg" src={url} alt={`Image ${index}`} />
-            </a>
-          </div>
-        ))}
-      </div> */}
-
-      <div
-        ref={setNodeRef}
-        style={style}
-        {...attributes}
-        {...listeners}
-        // className="flex flex-wrap"
-      >
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2">
+      <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+        <div
+          className="divImgSize bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2 overflow-hidden"
+          style={{ maxWidth: "22.4rem" }}
+        >
           {/* {title} */}
           <a href="#">
-            <img  src={thumb} alt={`Image`}  className="object-cover h-48 w-96" />
+            <img
+              src={thumb}
+              alt={`Image`}
+              className="imgSize object-cover h-48 w-96"
+            />
           </a>
         </div>
       </div>
