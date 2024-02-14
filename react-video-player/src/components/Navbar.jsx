@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Navbar = () => {
+  const [searchInputVisible, setSearchInputVisible] = useState(false);
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const toggleSearchInput = () => {
+    setSearchInputVisible(!searchInputVisible);
+  };
+
+  const toggleMenu = () => {
+    setMenuVisible(!menuVisible);
+  };
   return (
     <>
       <nav className="bg-white border-gray-200 dark:bg-gray-900">
@@ -15,15 +25,13 @@ const Navbar = () => {
               alt="Flowbite Logo"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              Video Player
+              Flowbite
             </span>
           </a>
           <div className="flex md:order-2">
             <button
               type="button"
-              data-collapse-toggle="navbar-search"
-              aria-controls="navbar-search"
-              aria-expanded="false"
+              onClick={toggleSearchInput}
               className="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 me-1"
             >
               <svg
@@ -43,7 +51,11 @@ const Navbar = () => {
               </svg>
               <span className="sr-only">Search</span>
             </button>
-            <div className="relative hidden md:block">
+            <div
+              className={`relative ${
+                searchInputVisible ? "" : "hidden"
+              } md:block`}
+            >
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg
                   className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -70,11 +82,9 @@ const Navbar = () => {
               />
             </div>
             <button
-              data-collapse-toggle="navbar-search"
               type="button"
+              onClick={toggleMenu}
               className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              aria-controls="navbar-search"
-              aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
               <svg
@@ -95,7 +105,9 @@ const Navbar = () => {
             </button>
           </div>
           <div
-            className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+            className={`items-center justify-between ${
+              menuVisible ? "" : "hidden"
+            } w-full md:flex md:w-auto md:order-1`}
             id="navbar-search"
           >
             <div className="relative mt-3 md:hidden">
@@ -127,28 +139,12 @@ const Navbar = () => {
               <li>
                 <a
                   href="#"
-                  className="block py-2 px-3 text-white bg-white-700 rounded md:bg-transparent md:text-white-700 md:p-0 md:dark:text-white-500"
+                  className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
                   aria-current="page"
                 >
                   Home
                 </a>
               </li>
-              {/* <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Services
-                </a>
-              </li> */}
             </ul>
           </div>
         </div>

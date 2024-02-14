@@ -1,112 +1,20 @@
 import React from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-const Cards = (props) => {
-  const { media } = props;
-  console.log("🚀 ~ Cards ~ media:", media);
+const Cards = ({ id, title, thumb }) => {
+  // const { media } = props;
+  // console.log("🚀 ~ Cards ~ media:", media);
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
+
   return (
     <>
-      {/* <div className="flex flex-wrap  mt-5 gap-8 ps-9">
-        <div className="max-w-xl  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://peach.blender.org/wp-content/uploads/bbb-splash.thumbnail.png"
-              alt=""
-            />
-          </a>
-        </div>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://peach.blender.org/wp-content/uploads/bbb-splash.thumbnail.png"
-              alt=""
-            />
-          </a>
-        </div>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://peach.blender.org/wp-content/uploads/bbb-splash.thumbnail.png"
-              alt=""
-            />
-          </a>
-        </div>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://peach.blender.org/wp-content/uploads/bbb-splash.thumbnail.png"
-              alt=""
-            />
-          </a>
-        </div>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://peach.blender.org/wp-content/uploads/bbb-splash.thumbnail.png"
-              alt=""
-            />
-          </a>
-        </div>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://peach.blender.org/wp-content/uploads/bbb-splash.thumbnail.png"
-              alt=""
-            />
-          </a>
-        </div>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://peach.blender.org/wp-content/uploads/bbb-splash.thumbnail.png"
-              alt=""
-            />
-          </a>
-        </div>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://peach.blender.org/wp-content/uploads/bbb-splash.thumbnail.png"
-              alt=""
-            />
-          </a>
-        </div>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://peach.blender.org/wp-content/uploads/bbb-splash.thumbnail.png"
-              alt=""
-            />
-          </a>
-        </div>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://peach.blender.org/wp-content/uploads/bbb-splash.thumbnail.png"
-              alt=""
-            />
-          </a>
-        </div>
-        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <a href="#">
-            <img
-              className="rounded-t-lg"
-              src="https://peach.blender.org/wp-content/uploads/bbb-splash.thumbnail.png"
-              alt=""
-            />
-          </a>
-        </div>
-      </div> */}
-      <div className="flex flex-wrap">
+      {/* <div className="flex flex-wrap">
         {media.map((url, index) => (
           <div
             key={index}
@@ -117,6 +25,21 @@ const Cards = (props) => {
             </a>
           </div>
         ))}
+      </div> */}
+
+      <div
+        ref={setNodeRef}
+        style={style}
+        {...attributes}
+        {...listeners}
+        className="flex flex-wrap"
+      >
+        <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2">
+          {title}
+          <a href="#">
+            <img className="rounded-t-lg" src={thumb} alt={`Image`} />
+          </a>
+        </div>
       </div>
     </>
   );
