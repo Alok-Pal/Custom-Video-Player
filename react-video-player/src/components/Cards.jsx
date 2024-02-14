@@ -3,8 +3,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
 const Cards = ({ id, title, thumb }) => {
-  // const { media } = props;
-  // console.log("🚀 ~ Cards ~ media:", media);
+ 
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
   const style = {
@@ -32,12 +31,12 @@ const Cards = ({ id, title, thumb }) => {
         style={style}
         {...attributes}
         {...listeners}
-        className="flex flex-wrap"
+        // className="flex flex-wrap"
       >
         <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2">
-          {title}
+          {/* {title} */}
           <a href="#">
-            <img className="rounded-t-lg" src={thumb} alt={`Image`} />
+            <img  src={thumb} alt={`Image`}  className="object-cover h-48 w-96" />
           </a>
         </div>
       </div>

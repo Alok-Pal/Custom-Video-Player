@@ -33,7 +33,7 @@ const HomePage = () => {
     if (mediaData !== undefined) {
       setTasks([...mediaData]);
     }
-  }, []);
+  }, [mediaData]);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
