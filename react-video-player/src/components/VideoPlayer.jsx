@@ -1,4 +1,6 @@
 import React, { useRef, useState } from "react";
+import { IoPlaySharp } from "react-icons/io5";
+import { IoPauseSharp } from "react-icons/io5";
 import "./VideoPlayer.css";
 
 const VideoPlayer = ({ sources }) => {
@@ -34,7 +36,13 @@ const VideoPlayer = ({ sources }) => {
           setVideoDuration(videoRef.current.duration);
           setIsLoading(false);
         }}
+        onWaiting={() => {
+          setIsLoading(true);
+        }}
         onTimeUpdate={onTimeUpdate}
+        onEnded={() => {
+          setIsPlaying(false);
+        }}
       ></video>
 
       {/* Over the top */}
@@ -43,11 +51,15 @@ const VideoPlayer = ({ sources }) => {
         <div>{isLoading ? "please wait..." : ""}</div>
 
         {/* ProgressBar */}
-        <div className="bg-white h-2 mb-4 mx-auto" style={{ width: "96%" }}>
+        <div
+          className="bg-white h-2 mb-3 mx-auto rounded-md overflow-hidden"
+          style={{ width: "96%" }}
+        >
           <div
-            className="progressBarInner bg-red-600 w-1/2 h-full "
+            className={` bg-red-600  h-full  ${
+              currentTime === videoDuration ? "" : "progressBarInner"
+            }`}
             style={{
-              width: "50%",
               animationPlayState: isPlaying ? "running" : "paused",
               animationDuration: isLoading
                 ? `0s`
@@ -57,9 +69,13 @@ const VideoPlayer = ({ sources }) => {
         </div>
 
         {/* video controller */}
-        <div className="flex ps-2 justify-between" style={{ width: "98%" }}>
+        <div className="flex  mb-2 justify-between" style={{ width: "98%" }}>
           <button onClick={playVideo} className="ps-4 text-white">
-            {isPlaying ? "Pause" : "Play"}
+            {isPlaying ? (
+              <IoPauseSharp style={{ fontSize: "26px" }} />
+            ) : (
+              <IoPlaySharp style={{ fontSize: "26px" }} />
+            )}
           </button>
 
           <span className=" text-white">
@@ -72,12 +88,13 @@ const VideoPlayer = ({ sources }) => {
 };
 
 const formatTime = (duration) => {
-  const oneSecond = 90;
-  const minutes = Math.floor(duration / 60);
-  const seconds = Math.floor(duration - (minutes * oneSecond));
+  const oneSecond = 60; // Change to 60 seconds per minute
+  const minutes = Math.floor(duration / oneSecond);
+  const seconds = Math.floor(duration % oneSecond);
 
-  const formatedtime = `${minutes}:${seconds}`;
-  return formatedtime;
+  const formattedTime = `${padTen(minutes)}:${padTen(seconds)}`;
+  return formattedTime;
 };
+const padTen = (num) => (num < 10 ? `0${num}` : `${num}`);
 
 export default VideoPlayer;
