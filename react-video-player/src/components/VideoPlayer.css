@@ -12,3 +12,12 @@
         width: 100%;
     }
 }
+
+.custom-input-range {
+    color: red !important;
+    background-color: red !important;
+}
+
+.mainBoxShadow {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
+}
