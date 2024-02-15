@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 import HomePage from './pages/HomePage';
 import Layout from './Layout';
+import PlayerPage from './pages/PlayerPage';
 
 const router = createBrowserRouter([
   {
@@ -11,7 +12,12 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <HomePage/>
-      }]
+      },
+      {
+        path: 'player/:dataToPass',
+        element: <PlayerPage/>
+      },
+    ]
   }
 ])
 

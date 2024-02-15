@@ -21,6 +21,7 @@ const Column = ({ tasks }) => {
             id={task.id}
             title={task.title}
             thumb={task.thumb}
+            sources={task.sources[0]}
           />
         ))}
       </SortableContext>
