@@ -18,6 +18,30 @@
     background-color: red !important;
 }
 
-.mainBoxShadow {
+.mainMediaDiv {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
+}
+
+
+@media (max-width: 611px) {
+    .mainMediaDiv {
+        width: 117% !important;
+        margin-left: -9% !important;
+    }
+
+    .sizeDiv {
+        font-size: 15px !important;
+    }
+
+    .sizeDivFullscreen {
+        font-size: 25px !important;
+    }
+
+    .sizePlusMinus {
+        font-size: 20px !important;
+    }
+
+    .volumeDiv {
+        width: 110px !important;
+    }
 }

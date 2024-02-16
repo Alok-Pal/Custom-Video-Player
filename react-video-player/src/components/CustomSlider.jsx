@@ -1,12 +1,17 @@
 import React from "react";
 
-const CustomSlider = ({ value, max, onChange ,color}) => {
+const CustomSlider = ({ value, max, onChange, color, size }) => {
+  console.log("🚀 ~ CustomSlider ~ size:", size);
   const percentage = (value / max) * 100;
 
   const handleMouseDown = (e) => {
-    const rect = e.target.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const newValue = (clickX / rect.width) * max;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.pageX - rect.left;
+    const seekBarWidth = rect.width;
+    const percentage = clickX / seekBarWidth;
+
+    const newValue = percentage * max;
+
     onChange(newValue);
   };
 
@@ -21,14 +26,19 @@ const CustomSlider = ({ value, max, onChange ,color}) => {
           cursor: "pointer",
           borderRadius: "5px",
           overflow: "hidden",
-          width: "99.5%",
-          margin: "auto",
+          width: `${size !== "undefined" && size}`,
+          margin: `${size === "98.5%" ? "auto" : ""}`,
+          marginTop: `${size === "27%" && "7px"}`,
         }}
         onMouseDown={handleMouseDown}
       >
         <div
           className="slider-thumb"
-          style={{ width: `${percentage}%`, height: "100%", background: `${color ? 'grey' : 'red'}` }}
+          style={{
+            width: `${percentage}%`,
+            height: "100%",
+            background: `${color ? "grey" : "red"}`,
+          }}
         />
       </div>
     </>

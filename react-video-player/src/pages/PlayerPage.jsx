@@ -6,8 +6,11 @@ const PlayerPage = () => {
   const { dataToPass } = useParams();
   console.log("🚀 ~ PlayerPage ~ sourcedata:", dataToPass);
   return (
-    <div className="flex justify-center w-full">
-      <div className="" style={{ width: "65%" }}>
+    <div className="flex justify-center w-full h-full ">
+      <div
+        className=""
+        style={{ width: "65%", height: "100%", alignItems: "center" }}
+      >
         <VideoPlayer sources={dataToPass} />
       </div>
     </div>

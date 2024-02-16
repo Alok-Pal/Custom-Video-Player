@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { IoPlaySharp } from "react-icons/io5";
 import { MdOutlineFullscreen } from "react-icons/md";
+import { FaVolumeMute } from "react-icons/fa";
+import { IoVolumeHighSharp } from "react-icons/io5";
 import { IoPauseSharp } from "react-icons/io5";
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
@@ -16,6 +18,7 @@ const VideoPlayer = ({ sources }) => {
   const [showControls, setShowControls] = useState(true);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [volume, setVolume] = useState(1);
+  const [isMute, setIsMute] = useState(false);
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -31,6 +34,11 @@ const VideoPlayer = ({ sources }) => {
       videoRef.current.play();
     }
     setIsPlaying(!isPlaying);
+    const timerId = setTimeout(() => {
+      setShowControls(false);
+    }, 3000);
+
+    return () => clearTimeout(timerId);
   };
 
   const handleTimeUpdate = () => {
@@ -42,6 +50,7 @@ const VideoPlayer = ({ sources }) => {
   };
 
   const handleSeek = (value) => {
+    console.log("🚀 ~ handleSeek ~ value:", value);
     videoRef.current.currentTime = value;
     setCurrentTime(value);
   };
@@ -139,9 +148,28 @@ const VideoPlayer = ({ sources }) => {
     setVolume(newVolume);
   };
 
+  const handleMute = () => {
+    setIsMute(!isMute);
+  };
+
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <div className="mt-1 relative mainBoxShadow">
+    <div className="mt-1 relative mainMediaDiv ">
       <video
+        muted={isMute}
         autoPlay
         onClick={handleVideoClick}
         ref={videoRef}
@@ -186,27 +214,38 @@ const VideoPlayer = ({ sources }) => {
             value={currentTime}
             max={duration}
             onChange={handleSeek}
+            size={"98.5%"}
           />
         </div>
       </div>
-      <div className=" mt-1 flex justify-between">
+      <div className="pt-1 ps-2 flex justify-between">
         <div className="flex">
-          <button onClick={handlePlayPause}>
+          <div className="pt-1" onClick={handlePlayPause}>
             {isPlaying ? (
-              <IoPauseSharp style={{ fontSize: "26px" }} />
+              <IoPauseSharp className="sizeDiv" style={{ fontSize: "26px" }} />
             ) : (
-              <IoPlaySharp style={{ fontSize: "26px" }} />
+              <IoPlaySharp className="sizeDiv" style={{ fontSize: "25px" }} />
             )}
-          </button>
+          </div>
           <div
-            className="ps-3 pt-1"
+            className={`${screenWidth <= 610 ? "ps-1" : "ps-3 pt-1"} sizeDiv`}
             style={{ fontSize: "16px", userSelect: "none" }}
           >
             {`${formatTime(currentTime)} / ${formatTime(duration)}`}
           </div>
-          <div className="ps-4 flex cursor-pointer" style={{ width: "139px" }}>
+          <div
+            className="pt-1 ps-4 cursor-pointer sizeDiv"
+            onClick={handleMute}
+            style={{ fontSize: "24px", color: "black" }}
+          >
+            {isMute ? <FaVolumeMute /> : <IoVolumeHighSharp />}
+          </div>
+          <div
+            className="ps-3 flex cursor-pointer volumeDiv "
+            style={{ width: "139px" }}
+          >
             <FaMinus
-              className="ps-1 text-3xl pe-2 pt-1"
+              className={`pe-2 text-3xl pt-1 sizePlusMinus `}
               onClick={handleVolumeDecrease}
             />
             <CustomSlider
@@ -215,15 +254,16 @@ const VideoPlayer = ({ sources }) => {
               step={0.001}
               onChange={handleVolumeChange}
               color={"grey"}
+              size={`${screenWidth <= 610 ? "27%" : "98.5%"}`}
             />
             <FaPlus
-              className="ps-2 text-3xl pt-1"
+              className={`ps-2 text-3xl pt-1 sizePlusMinus`}
               onClick={handleVolumeIncrease}
             />
           </div>
         </div>
         <div className="">
-          <button
+          <div
             onClick={handleFullScreenToggle}
             style={{
               background: "transparent",
@@ -234,10 +274,11 @@ const VideoPlayer = ({ sources }) => {
           >
             {!isFullScreen && (
               <MdOutlineFullscreen
+                className="pe-2 sizeDivFullscreen"
                 style={{ fontSize: "30px", color: "black" }}
               />
             )}
-          </button>
+          </div>
         </div>
       </div>
     </div>
