@@ -4,11 +4,14 @@ import { MdOutlineFullscreen } from "react-icons/md";
 import { FaVolumeMute } from "react-icons/fa";
 import { IoVolumeHighSharp } from "react-icons/io5";
 import { IoPauseSharp } from "react-icons/io5";
+import { HiDotsVertical } from "react-icons/hi";
+
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
 import Loader from "./Loader";
 import CustomSlider from "./CustomSlider";
 import "./VideoPlayer.css";
+import SpeedDropdown from "./SpeedDropdown/SpeedDropdown";
 
 const VideoPlayer = ({ sources }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -19,6 +22,9 @@ const VideoPlayer = ({ sources }) => {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [volume, setVolume] = useState(1);
   const [isMute, setIsMute] = useState(false);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [showSpeedDropdown, setShowSpeedDropdown] = useState(false);
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -152,8 +158,6 @@ const VideoPlayer = ({ sources }) => {
     setIsMute(!isMute);
   };
 
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -165,6 +169,18 @@ const VideoPlayer = ({ sources }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+ 
+  const handleSpeedChange = (newSpeed) => {
+    setPlaybackSpeed(newSpeed);
+    videoRef.current.playbackRate = newSpeed;
+    setShowSpeedDropdown(false); // Close the dropdown after selecting speed
+  };
+  const toggleSpeedDropdown = () => {
+    setShowSpeedDropdown(!showSpeedDropdown);
+  };
+
+  const speedOptions = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
   return (
     <div className="mt-1 relative mainMediaDiv ">
@@ -262,7 +278,9 @@ const VideoPlayer = ({ sources }) => {
             />
           </div>
         </div>
-        <div className="">
+
+        <div className="flex">
+
           <div
             onClick={handleFullScreenToggle}
             style={{
@@ -274,11 +292,12 @@ const VideoPlayer = ({ sources }) => {
           >
             {!isFullScreen && (
               <MdOutlineFullscreen
-                className="pe-2 sizeDivFullscreen"
+                className="pe-1 sizeDivFullscreen"
                 style={{ fontSize: "30px", color: "black" }}
               />
             )}
           </div>
+          <SpeedDropdown toggleSpeedDropdown={toggleSpeedDropdown} showSpeedDropdown={showSpeedDropdown} handleSpeedChange={handleSpeedChange}  playbackSpeed={playbackSpeed}/>
         </div>
       </div>
     </div>
