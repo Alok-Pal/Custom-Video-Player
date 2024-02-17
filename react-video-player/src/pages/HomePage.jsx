@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { mediaJSON } from "../utils/data";
-import { useDispatch, useSelector } from "react-redux";
-import { setMediaData } from "../redux/slice/mediaSlice";
-import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import {
   DndContext,
   KeyboardSensor,
-  PointerSensor,
+  MouseSensor,
   TouchSensor,
   closestCorners,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import Column from "../components/Column";
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Column from "../components/Column/Column";
+import { setMediaData } from "../redux/slice/mediaSlice";
+import { mediaJSON } from "../utils/data";
 
 const HomePage = () => {
   const [tasks, setTasks] = useState([]);
@@ -23,8 +23,6 @@ const HomePage = () => {
   }, [dispatch]);
 
   const mediaData = useSelector((state) => state.media.categories[0]?.videos);
-  console.log("🚀 ~ HomePage ~ mediaData:", mediaData);
-
   useEffect(() => {
     if (mediaData !== undefined) {
       setTasks([...mediaData]);
@@ -47,7 +45,11 @@ const HomePage = () => {
   };
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    }),
     useSensor(TouchSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,

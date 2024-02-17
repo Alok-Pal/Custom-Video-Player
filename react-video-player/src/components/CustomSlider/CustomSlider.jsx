@@ -1,7 +1,6 @@
 import React from "react";
 
 const CustomSlider = ({ value, max, onChange, color, size }) => {
-  console.log("🚀 ~ CustomSlider ~ size:", size);
   const percentage = (value / max) * 100;
 
   const handleMouseDown = (e) => {

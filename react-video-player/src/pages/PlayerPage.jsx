@@ -1,10 +1,9 @@
 import React from "react";
-import VideoPlayer from "../components/VideoPlayer";
+import VideoPlayer from "../components/VideoPlayer/VideoPlayer";
 import { useParams } from "react-router-dom";
 
 const PlayerPage = () => {
   const { dataToPass } = useParams();
-  console.log("🚀 ~ PlayerPage ~ sourcedata:", dataToPass);
   return (
     <div className="flex justify-center w-full h-full ">
       <div

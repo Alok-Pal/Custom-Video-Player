@@ -4,17 +4,15 @@ import { MdOutlineFullscreen } from "react-icons/md";
 import { FaVolumeMute } from "react-icons/fa";
 import { IoVolumeHighSharp } from "react-icons/io5";
 import { IoPauseSharp } from "react-icons/io5";
-import { HiDotsVertical } from "react-icons/hi";
-
 import { FaPlus } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa";
-import Loader from "./Loader";
-import CustomSlider from "./CustomSlider";
+import Loader from "../Loader/Loader";
+import CustomSlider from "../CustomSlider/CustomSlider";
 import "./VideoPlayer.css";
-import SpeedDropdown from "./SpeedDropdown/SpeedDropdown";
+import SpeedDropdown from "../SpeedDropdown/SpeedDropdown";
 
 const VideoPlayer = ({ sources }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -56,7 +54,6 @@ const VideoPlayer = ({ sources }) => {
   };
 
   const handleSeek = (value) => {
-    console.log("🚀 ~ handleSeek ~ value:", value);
     videoRef.current.currentTime = value;
     setCurrentTime(value);
   };
@@ -79,12 +76,18 @@ const VideoPlayer = ({ sources }) => {
   };
 
   const handleFullScreenToggle = () => {
+    // const wasPlaying = isPlaying;
+    debugger;
+    const wasPlaying = isPlaying;
     if (!document.fullscreenElement) {
       // Entered full-screen mode
       setIsFullScreen(true);
     } else {
+      debugger;
       // Exited full-screen mode
       setIsFullScreen(false);
+      videoRef.current.pause();
+      setIsPlaying(false);
     }
     if (!isFullScreen) {
       if (videoRef.current.requestFullscreen) {
@@ -108,15 +111,13 @@ const VideoPlayer = ({ sources }) => {
       }
     }
 
+    // wasPlaying ? videoRef.current.play() : videoRef.current.pause();
+    setIsPlaying(false);
     setIsFullScreen(isFullScreen);
   };
   useEffect(() => {
     const fullscreenChangeHandler = () => {
       if (document.fullscreenElement) {
-        console.log(
-          "🚀 ~ fullscreenChangeHandler ~ document.fullscreenElement:",
-          document.fullscreenElement
-        );
         setIsFullScreen(true);
       } else {
         setIsFullScreen(false);
@@ -131,9 +132,10 @@ const VideoPlayer = ({ sources }) => {
   }, []);
 
   useEffect(() => {
+    console.log(document.fullscreenElement, "sJJJJJJJJJJJJJJ");
     if (isFullScreen === false) {
-      videoRef.current.pause();
-      setIsPlaying(false);
+      videoRef.current.play();
+      setIsPlaying(true);
     }
   }, [isFullScreen]);
 
@@ -170,7 +172,6 @@ const VideoPlayer = ({ sources }) => {
     };
   }, []);
 
- 
   const handleSpeedChange = (newSpeed) => {
     setPlaybackSpeed(newSpeed);
     videoRef.current.playbackRate = newSpeed;
@@ -179,14 +180,16 @@ const VideoPlayer = ({ sources }) => {
   const toggleSpeedDropdown = () => {
     setShowSpeedDropdown(!showSpeedDropdown);
   };
-
-  const speedOptions = [0.5, 0.75, 1, 1.25, 1.5, 2];
+  useEffect(() => {
+    videoRef.current.play();
+  }, []);
 
   return (
     <div className="mt-1 relative mainMediaDiv ">
       <video
-        muted={isMute}
         autoPlay
+        playsInline
+        muted={isMute}
         onClick={handleVideoClick}
         ref={videoRef}
         src={sources}
@@ -200,6 +203,7 @@ const VideoPlayer = ({ sources }) => {
         }}
         style={{ width: "100rem" }}
       />
+
       {isLoading && (
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <Loader />
@@ -280,7 +284,6 @@ const VideoPlayer = ({ sources }) => {
         </div>
 
         <div className="flex">
-
           <div
             onClick={handleFullScreenToggle}
             style={{
@@ -297,7 +300,12 @@ const VideoPlayer = ({ sources }) => {
               />
             )}
           </div>
-          <SpeedDropdown toggleSpeedDropdown={toggleSpeedDropdown} showSpeedDropdown={showSpeedDropdown} handleSpeedChange={handleSpeedChange}  playbackSpeed={playbackSpeed}/>
+          <SpeedDropdown
+            toggleSpeedDropdown={toggleSpeedDropdown}
+            showSpeedDropdown={showSpeedDropdown}
+            handleSpeedChange={handleSpeedChange}
+            playbackSpeed={playbackSpeed}
+          />
         </div>
       </div>
     </div>
