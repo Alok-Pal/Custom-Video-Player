@@ -25,11 +25,6 @@ const VideoPlayer = ({ sources }) => {
   const [showSpeedDropdown, setShowSpeedDropdown] = useState(false);
   const videoRef = useRef(null);
 
-  useEffect(() => {
-    if (currentTime === duration && duration !== 0) {
-      setIsPlaying(false);
-    }
-  }, [currentTime, duration]);
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -44,20 +39,12 @@ const VideoPlayer = ({ sources }) => {
 
     return () => clearTimeout(timerId);
   };
-
   const handleTimeUpdate = () => {
     setCurrentTime(videoRef.current.currentTime);
   };
-
   const handleDurationChange = () => {
     setDuration(videoRef.current.duration);
   };
-
-  const handleSeek = (value) => {
-    videoRef.current.currentTime = value;
-    setCurrentTime(value);
-  };
-
   const handleVideoClick = () => {
     setShowControls(true);
     // Pause the video when the player area is clicked
@@ -74,11 +61,7 @@ const VideoPlayer = ({ sources }) => {
 
     return () => clearTimeout(timerId);
   };
-
   const handleFullScreenToggle = () => {
-    // const wasPlaying = isPlaying;
-    debugger;
-    const wasPlaying = isPlaying;
     if (!document.fullscreenElement) {
       // Entered full-screen mode
       setIsFullScreen(true);
@@ -111,10 +94,47 @@ const VideoPlayer = ({ sources }) => {
       }
     }
 
-    // wasPlaying ? videoRef.current.play() : videoRef.current.pause();
     setIsPlaying(false);
     setIsFullScreen(isFullScreen);
   };
+  const handleVolumeChange = (value) => {
+    videoRef.current.volume = value;
+    setVolume(value);
+  };
+  const handleVolumeIncrease = () => {
+    const newVolume = Math.min(volume + 0.1, 1); // Increase volume by 0.1, but not exceeding 1
+    videoRef.current.volume = newVolume;
+    setVolume(newVolume);
+  };
+  const handleVolumeDecrease = () => {
+    const newVolume = Math.max(volume - 0.1, 0); // Decrease volume by 0.1, but not going below 0
+    videoRef.current.volume = newVolume;
+    setVolume(newVolume);
+  };
+  const handleMute = () => {
+    setIsMute(!isMute);
+  };
+  const handleSpeedChange = (newSpeed) => {
+    setPlaybackSpeed(newSpeed);
+    videoRef.current.playbackRate = newSpeed;
+    setShowSpeedDropdown(false); // Close the dropdown after selecting speed
+  };
+  const toggleSpeedDropdown = () => {
+    setShowSpeedDropdown(!showSpeedDropdown);
+  }; 
+  const handleSeekBarChange = (e) => {
+    const newTime = e.target.value;
+    videoRef.current.currentTime = newTime;
+    setCurrentTime(newTime);
+  };
+
+  
+  useEffect(() => {
+    if (currentTime === duration && duration !== 0) {
+      setIsPlaying(false);
+    }
+  }, [currentTime, duration]);
+
   useEffect(() => {
     const fullscreenChangeHandler = () => {
       if (document.fullscreenElement) {
@@ -139,27 +159,6 @@ const VideoPlayer = ({ sources }) => {
     }
   }, [isFullScreen]);
 
-  const handleVolumeChange = (value) => {
-    videoRef.current.volume = value;
-    setVolume(value);
-  };
-
-  const handleVolumeIncrease = () => {
-    const newVolume = Math.min(volume + 0.1, 1); // Increase volume by 0.1, but not exceeding 1
-    videoRef.current.volume = newVolume;
-    setVolume(newVolume);
-  };
-
-  const handleVolumeDecrease = () => {
-    const newVolume = Math.max(volume - 0.1, 0); // Decrease volume by 0.1, but not going below 0
-    videoRef.current.volume = newVolume;
-    setVolume(newVolume);
-  };
-
-  const handleMute = () => {
-    setIsMute(!isMute);
-  };
-
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -172,18 +171,9 @@ const VideoPlayer = ({ sources }) => {
     };
   }, []);
 
-  const handleSpeedChange = (newSpeed) => {
-    setPlaybackSpeed(newSpeed);
-    videoRef.current.playbackRate = newSpeed;
-    setShowSpeedDropdown(false); // Close the dropdown after selecting speed
-  };
-  const toggleSpeedDropdown = () => {
-    setShowSpeedDropdown(!showSpeedDropdown);
-  };
   useEffect(() => {
     videoRef.current.play();
   }, []);
-
   return (
     <div className="mt-1 relative mainMediaDiv ">
       <video
@@ -228,17 +218,19 @@ const VideoPlayer = ({ sources }) => {
           )}
         </button>
       </div>
-      <div className="mt-2">
-        <div>
-          <CustomSlider
-            value={currentTime}
-            max={duration}
-            onChange={handleSeek}
-            size={"98.5%"}
-          />
-        </div>
+      <div className="mt-1 mx-auto" style={{ width: "98%" }}>
+        <input
+          className="range "
+          id="range1"
+          type="range"
+          min="0"
+          max={duration}
+          value={currentTime}
+          onChange={handleSeekBarChange}
+        />
+        {/* </div> */}
       </div>
-      <div className="pt-1 ps-2 flex justify-between">
+      <div className=" ps-2 flex justify-between">
         <div className="flex">
           <div className="pt-1" onClick={handlePlayPause}>
             {isPlaying ? (

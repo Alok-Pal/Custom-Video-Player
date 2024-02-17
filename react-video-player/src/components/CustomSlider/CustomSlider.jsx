@@ -45,3 +45,5 @@ const CustomSlider = ({ value, max, onChange, color, size }) => {
 };
 
 export default CustomSlider;
+
+

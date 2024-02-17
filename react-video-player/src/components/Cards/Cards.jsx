@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import "./Cards.css";
 
 const Cards = ({ id, title, thumb, sources }) => {
+  const navigate = useNavigate();
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
-  const navigate = useNavigate();
   const dataToPass = sources;
   const encodedDataToPass = encodeURIComponent(dataToPass);
   const style = {

@@ -17,18 +17,19 @@ import { mediaJSON } from "../utils/data";
 const HomePage = () => {
   const [tasks, setTasks] = useState([]);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(setMediaData(mediaJSON.categories));
-  }, [dispatch]);
-
   const mediaData = useSelector((state) => state.media.categories[0]?.videos);
-  useEffect(() => {
-    if (mediaData !== undefined) {
-      setTasks([...mediaData]);
-    }
-  }, [mediaData]);
 
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    }),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
   const handleDragEnd = (event) => {
     const { active, over } = event;
 
@@ -44,17 +45,17 @@ const HomePage = () => {
     });
   };
 
-  const sensors = useSensors(
-    useSensor(MouseSensor, {
-      activationConstraint: {
-        distance: 10,
-      },
-    }),
-    useSensor(TouchSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
+  
+  useEffect(() => {
+    dispatch(setMediaData(mediaJSON.categories));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (mediaData !== undefined) {
+      setTasks([...mediaData]);
+    }
+  }, [mediaData]);
+  
 
   return (
     <div className="mt-5">
