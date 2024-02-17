@@ -8,6 +8,7 @@ import Cards from "../Cards/Cards";
 
 
 const Column = ({ tasks }) => {
+  console.log("🚀 ~ Column ~ tasks:", tasks)
   return (
     <div
       className="column bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-2 overflow-hidden"
