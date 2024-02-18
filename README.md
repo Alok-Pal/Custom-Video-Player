@@ -52,7 +52,7 @@ Before you start, make sure you have [Node.js](https://nodejs.org/) installed.
 
 ### Deployed on Vercel.
 
-- Link -->
+- Link --> https://react-video-player-754kkewob-alok-pals-projects.vercel.app
 - [React Video Player Demo](https://react-video-player-754kkewob-alok-pals-projects.vercel.app)
 
 
