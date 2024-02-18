@@ -11,3 +11,37 @@ Before you start, make sure you have [Node.js](https://nodejs.org/) installed.
    ```bash
    git clone https://github.com/your-username/react-video-player.git 
   
+### Video Library:
+
+- The home page provides a library of all available videos.
+- Users can reorder videos using a drag-and-drop interface.
+
+### Search Functionality:
+
+- Utilize the search input to find videos in the library.
+- Search is performed based on the titles of the videos.
+
+### Video Playback:
+
+- Click on a video to open the video player and watch the selected video.
+- For mobile users, double-click to navigate to videos.
+
+### Autoplay Functionality:
+
+- Autoplay feature enabled; click on the play/pause button or directly on the video to toggle playback.
+
+### Video Controls:
+
+- Seek functionality allows users to drag or click on a specific position to start the video from there.
+- Mute/unmute options available.
+- Adjust volume using the + and - buttons or by dragging/clicking on the volume seek bar.
+- Change playback speed.
+- Full-screen mode for an immersive viewing experience.
+- Timer displays the progress of the video.
+
+### Keyboard Controls:
+
+- Space bar: Play/pause.
+- Up/Down arrow keys: Increase/decrease volume.
+- 'M' key: Mute/unmute.
+- 'F' key: Toggle full-screen mode.
