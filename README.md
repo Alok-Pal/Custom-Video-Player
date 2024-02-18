@@ -21,11 +21,6 @@ Before you start, make sure you have [Node.js](https://nodejs.org/) installed.
 - Utilize the search input to find videos in the library.
 - Search is performed based on the titles of the videos.
 
-### Video Playback:
-
-- Click on a video to open the video player and watch the selected video.
-- For mobile users, double-click to navigate to videos.
-
 ### Autoplay Functionality:
 
 - Autoplay feature enabled; click on the play/pause button or directly on the video to toggle playback.
@@ -45,3 +40,21 @@ Before you start, make sure you have [Node.js](https://nodejs.org/) installed.
 - Up/Down arrow keys: Increase/decrease volume.
 - 'M' key: Mute/unmute.
 - 'F' key: Toggle full-screen mode.
+
+### Video Playback:
+
+- Click on a video to open the video player and watch the selected video.
+- For mobile users, double-click to navigate to videos.
+
+### External Library Used.
+
+- React DND kit for Drag and Drop functionality.
+
+### Deployed on Vercel.
+
+- Link -->
+-  ```bash
+   [git clone https://github.com/your-username/react-video-player.git ](https://react-video-player-754kkewob-alok-pals-projects.vercel.app)https://react-video-player-754kkewob-alok-pals-projects.vercel.app
+
+
+
