@@ -53,8 +53,8 @@ Before you start, make sure you have [Node.js](https://nodejs.org/) installed.
 ### Deployed on Vercel.
 
 - Link -->
--  ```bash
-   [git clone https://github.com/your-username/react-video-player.git ](https://react-video-player-754kkewob-alok-pals-projects.vercel.app)https://react-video-player-754kkewob-alok-pals-projects.vercel.app
+- [React Video Player Demo](https://react-video-player-754kkewob-alok-pals-projects.vercel.app)
+
 
 
 
