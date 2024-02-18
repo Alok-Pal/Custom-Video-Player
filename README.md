@@ -9,5 +9,5 @@ Before you start, make sure you have [Node.js](https://nodejs.org/) installed.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/react-video-player.git
-```
+   git clone https://github.com/your-username/react-video-player.git 
+  ```
