@@ -65,7 +65,6 @@ const VideoPlayer = ({ sources }) => {
       // Entered full-screen mode
       setIsFullScreen(true);
     } else {
-      debugger;
       // Exited full-screen mode
       setIsFullScreen(false);
       videoRef.current.pause();
@@ -157,7 +156,6 @@ const VideoPlayer = ({ sources }) => {
         playPromise
           .then((_) => {})
           .catch((error) => {
-            console.log("🚀 ~ useEffect ~ error:", error);
           });
       }
       setIsPlaying(true);
@@ -187,7 +185,6 @@ const VideoPlayer = ({ sources }) => {
         })
         .catch((error) => {
           // Auto-play was prevented
-          console.log("🚀 ~ useEffect ~ error:", error);
           // Show paused UI.
         });
     }

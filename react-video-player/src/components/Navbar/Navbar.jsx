@@ -19,7 +19,6 @@ const Navbar = () => {
 
 
   const handleSearch = (event) => {
-    console.log("🚀 ~ handleSearch ~ event.target.value:", event.target.value)
     dispatch(setSearchQuery(event.target.value));
   };
 
