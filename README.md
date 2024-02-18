@@ -55,6 +55,11 @@ Before you start, make sure you have [Node.js](https://nodejs.org/) installed.
 - Link --> https://react-video-player-754kkewob-alok-pals-projects.vercel.app
 - [React Video Player Demo](https://react-video-player-754kkewob-alok-pals-projects.vercel.app)
 
+### Light House Score
 
+- Performance - 55.
+- Accessibility --> 95.
+- Best Practices --> 95.
+- SEO --> 100.
 
 
