@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { IoPlaySharp } from "react-icons/io5";
 import { MdOutlineFullscreen } from "react-icons/md";
 import { FaVolumeMute } from "react-icons/fa";
@@ -25,8 +25,7 @@ const VideoPlayer = ({ sources }) => {
   const [showSpeedDropdown, setShowSpeedDropdown] = useState(false);
   const videoRef = useRef(null);
 
-
-  const handlePlayPause = () => {
+  const handlePlayPause = useCallback(() => {
     if (isPlaying) {
       videoRef.current.pause();
     } else {
@@ -38,7 +37,7 @@ const VideoPlayer = ({ sources }) => {
     }, 3000);
 
     return () => clearTimeout(timerId);
-  };
+  });
   const handleTimeUpdate = () => {
     setCurrentTime(videoRef.current.currentTime);
   };
@@ -61,7 +60,7 @@ const VideoPlayer = ({ sources }) => {
 
     return () => clearTimeout(timerId);
   };
-  const handleFullScreenToggle = () => {
+  const handleFullScreenToggle = useCallback(() => {
     if (!document.fullscreenElement) {
       // Entered full-screen mode
       setIsFullScreen(true);
@@ -96,24 +95,24 @@ const VideoPlayer = ({ sources }) => {
 
     setIsPlaying(false);
     setIsFullScreen(isFullScreen);
-  };
+  });
   const handleVolumeChange = (value) => {
     videoRef.current.volume = value;
     setVolume(value);
   };
-  const handleVolumeIncrease = () => {
+  const handleVolumeIncrease = useCallback(() => {
     const newVolume = Math.min(volume + 0.1, 1); // Increase volume by 0.1, but not exceeding 1
     videoRef.current.volume = newVolume;
     setVolume(newVolume);
-  };
-  const handleVolumeDecrease = () => {
+  });
+  const handleVolumeDecrease = useCallback(() => {
     const newVolume = Math.max(volume - 0.1, 0); // Decrease volume by 0.1, but not going below 0
     videoRef.current.volume = newVolume;
     setVolume(newVolume);
-  };
-  const handleMute = () => {
+  });
+  const handleMute = useCallback(() => {
     setIsMute(!isMute);
-  };
+  });
   const handleSpeedChange = (newSpeed) => {
     setPlaybackSpeed(newSpeed);
     videoRef.current.playbackRate = newSpeed;
@@ -121,14 +120,13 @@ const VideoPlayer = ({ sources }) => {
   };
   const toggleSpeedDropdown = () => {
     setShowSpeedDropdown(!showSpeedDropdown);
-  }; 
+  };
   const handleSeekBarChange = (e) => {
     const newTime = e.target.value;
     videoRef.current.currentTime = newTime;
     setCurrentTime(newTime);
   };
 
-  
   useEffect(() => {
     if (currentTime === duration && duration !== 0) {
       setIsPlaying(false);
@@ -152,9 +150,16 @@ const VideoPlayer = ({ sources }) => {
   }, []);
 
   useEffect(() => {
-    console.log(document.fullscreenElement, "sJJJJJJJJJJJJJJ");
     if (isFullScreen === false) {
-      videoRef.current.play();
+      let playPromise = videoRef.current.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then((_) => {})
+          .catch((error) => {
+            console.log("🚀 ~ useEffect ~ error:", error);
+          });
+      }
       setIsPlaying(true);
     }
   }, [isFullScreen]);
@@ -172,8 +177,59 @@ const VideoPlayer = ({ sources }) => {
   }, []);
 
   useEffect(() => {
-    videoRef.current.play();
+    let playPromise = videoRef.current.play();
+
+    if (playPromise !== undefined) {
+      playPromise
+        .then((_) => {
+          // Automatic playback started!
+          // Show playing UI.
+        })
+        .catch((error) => {
+          // Auto-play was prevented
+          console.log("🚀 ~ useEffect ~ error:", error);
+          // Show paused UI.
+        });
+    }
   }, []);
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      switch (event.key) {
+        case " ":
+          handlePlayPause();
+          break;
+        case "ArrowUp":
+          handleVolumeIncrease();
+          break;
+        case "ArrowDown":
+          handleVolumeDecrease();
+          break;
+        case "m":
+        case "M":
+          handleMute();
+          break;
+        case "f":
+        case "F":
+          handleFullScreenToggle();
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [
+    handlePlayPause,
+    handleVolumeIncrease,
+    handleVolumeDecrease,
+    handleMute,
+    handleFullScreenToggle,
+  ]);
   return (
     <div className="mt-1 relative mainMediaDiv ">
       <video
