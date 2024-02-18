@@ -27,9 +27,13 @@ const VideoPlayer = ({ sources }) => {
 
   const handlePlayPause = useCallback(() => {
     if (isPlaying) {
-      videoRef.current.pause();
+      if (!isLoading) {
+        videoRef.current.pause();
+      }
     } else {
-      videoRef.current.play();
+      if (!isLoading) {
+        videoRef.current.play();
+      }
     }
     setIsPlaying(!isPlaying);
     const timerId = setTimeout(() => {
@@ -48,11 +52,15 @@ const VideoPlayer = ({ sources }) => {
     setShowControls(true);
     // Pause the video when the player area is clicked
     if (isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
+      if (!isLoading) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
     } else {
-      videoRef.current.play();
-      setIsPlaying(true);
+      if (!isLoading) {
+        videoRef.current.play();
+        setIsPlaying(true);
+      }
     }
     const timerId = setTimeout(() => {
       setShowControls(false);
@@ -153,10 +161,7 @@ const VideoPlayer = ({ sources }) => {
       let playPromise = videoRef.current.play();
 
       if (playPromise !== undefined) {
-        playPromise
-          .then((_) => {})
-          .catch((error) => {
-          });
+        playPromise.then((_) => {}).catch((error) => {});
       }
       setIsPlaying(true);
     }
