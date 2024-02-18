@@ -10,4 +10,4 @@ Before you start, make sure you have [Node.js](https://nodejs.org/) installed.
 
    ```bash
    git clone https://github.com/your-username/react-video-player.git 
-  ```
+  
