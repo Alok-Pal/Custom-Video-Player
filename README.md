@@ -72,7 +72,7 @@ This project is deployed on [Vercel](https://vercel.com).
 
 You can access the live version of the video player here:
 
-- [React Video Player Demo](https://react-video-player-rosy.vercel.app/)
+- [React Video Player Demo](https://custom-video-player-rosy.vercel.app/)
 
 ---
 
