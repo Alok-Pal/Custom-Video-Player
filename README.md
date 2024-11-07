@@ -1,6 +1,6 @@
-# React Video Player 🎬
+# Custom Video Player 🎬
 
-A customizable and feature-rich React video player with a user-friendly interface. Ideal for building modern, interactive video experiences.
+A feature-rich video player with a user-friendly interface, built from scratch using React. Designed with modern web standards in mind, it includes all the essential features for an interactive and seamless video experience. From customizable controls to advanced functionality like autoplay, drag-and-drop video management, full-screen mode, and keyboard shortcuts, this player offers everything needed for a high-quality viewing experience. Whether for desktop or mobile users, it ensures flexibility, performance, and ease of use.
 
 [![React](https://img.shields.io/badge/React-%23202324?style=flat&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=flat&logo=vercel&logoColor=white)](https://vercel.com)
